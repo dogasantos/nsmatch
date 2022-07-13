@@ -33,10 +33,6 @@ func parseOptions() *Options {
 }
 
 func main() {
-	//var wg sync.WaitGroup
-	var tr string
-	var good_resolvers []string
-	var tmp []string
 
 	options := parseOptions()
 	if options.Version {
@@ -61,25 +57,20 @@ func main() {
 		
 		if options.Verbose == true {
 			fmt.Printf("  + Resolvers loaded: %d\n",len(resolvers))
-			if len(trustedns)>0 {
-				fmt.Printf("  + Trusted NS servers: %s\n",len(trustedns))
-			}
-		}
-		
-		if options.Verbose == true {
+			fmt.Printf("  + Targets loaded: %d\n",len(targets))
+			fmt.Printf("  + Trusted NS servers: %d\n",len(trustedns))
 			fmt.Printf("  + Starting routines\n")
 		}
-
-		for {
-			for _, resolver := range resolvers {
-				if len(resolver) > 2 { // resolver looks good, not blank line.
-					for _, target := range targets {
-						go nsmatch.Start(resolver, targets, trustedns, options.Verbose)
-					}
-				}
+		
+		for _, target := range targets {
+			if len(target) > 1 {
+				fmt.Println(target)
+				go nsmatch.Start(resolvers, target, trustedns, options.Verbose)
+				fmt.Println("======")
 			}
 		}
-	} 
+
+	}
 }
 
 
