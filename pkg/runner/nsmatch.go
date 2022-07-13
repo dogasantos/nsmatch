@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/miekg/dns"
@@ -25,7 +26,7 @@ func DoResolve(target string, resolver string, trustedns []string) {
 				nsfound = strings.ReplaceAll(nsfound, " ", "")
 				if len(trusted) > 2 {
 					if nsfound == trusted {
-						fmt.Printf("%s:%s (expecting %s)\n",target,nsfound,trusted)
+						fmt.Printf("%s:%s@%s\n",target,nsfound,trusted)
 					}
 				}
 			}
@@ -41,11 +42,22 @@ func getRandomResolver(resolvers []string) string {
 	return resolvers[randIdx]
 }
 
-func Start(resolvers []string, target string, trustedns []string, verbose bool) {
-	resolver := getRandomResolver(resolvers)
+func Start(resolvers []string, target string, trustedns []string, verbose bool, wg *sync.WaitGroup) {
+	var resolver string
+
+	defer wg.Done()
+	for {
+		resolver = getRandomResolver(resolvers)
+		if len(resolver) > 2{ 
+			break
+		}
+	}
+
 	if verbose {
 		fmt.Printf("  + Testing: %s using %s looking for any of %s\n",target, resolver, trustedns)
 	}
+	
 	DoResolve(target,resolver,trustedns)
+	
 }
 	

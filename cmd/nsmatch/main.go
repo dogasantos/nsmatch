@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
+	"sync"
 
 	nsmatch "github.com/dogasantos/nsmatch/pkg/runner"
 )
@@ -60,15 +61,18 @@ func main() {
 			fmt.Printf("  + Trusted NS servers: %d\n",len(trustedns))
 			fmt.Printf("  + Starting routines\n")
 		}
+		wg := new(sync.WaitGroup)
 		
 		for _, target := range targets {
 			target = strings.ReplaceAll(target, " ", "")
 			if len(target) > 1 {
-				go nsmatch.Start(resolvers, target, trustedns, options.Verbose)
+				wg.Add(1)
+				go nsmatch.Start(resolvers, target, trustedns, options.Verbose, wg)
 			}
 		}
-
+		wg.Wait()
 	}
+	
 }
 
 
