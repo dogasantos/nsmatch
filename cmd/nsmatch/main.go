@@ -18,7 +18,6 @@ type Options struct {
 	Verbose				bool
 }
 
-
 var version = "0.1"
 
 func parseOptions() *Options {
@@ -63,10 +62,9 @@ func main() {
 		}
 		
 		for _, target := range targets {
+			target = strings.ReplaceAll(target, " ", "")
 			if len(target) > 1 {
-				fmt.Println(target)
 				go nsmatch.Start(resolvers, target, trustedns, options.Verbose)
-				fmt.Println("======")
 			}
 		}
 

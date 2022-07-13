@@ -19,9 +19,14 @@ func DoResolve(target string, resolver string, trustedns []string) {
 	dnsResponses, _ := dnsClient.Query(target, dns.TypeNS)
 	if len(trustedns) > 0 {
 		for _, nsfound := range dnsResponses.NS {
+
 			for _, trusted := range trustedns {
-				if strings.Contains(nsfound,trusted) {
-					fmt.Printf("%s:%s (expecting %s)\n",target,nsfound,trusted)
+				trusted = strings.ReplaceAll(trusted, " ", "")
+				nsfound = strings.ReplaceAll(nsfound, " ", "")
+				if len(trusted) > 2 {
+					if nsfound == trusted {
+						fmt.Printf("%s:%s (expecting %s)\n",target,nsfound,trusted)
+					}
 				}
 			}
 		}
@@ -36,12 +41,10 @@ func getRandomResolver(resolvers []string) string {
 	return resolvers[randIdx]
 }
 
-
 func Start(resolvers []string, target string, trustedns []string, verbose bool) {
-	fmt.Println("AAAAA")
 	resolver := getRandomResolver(resolvers)
 	if verbose {
-		fmt.Printf("  + Testing: %s using %s looking for any of %s",target, resolver, trustedns)
+		fmt.Printf("  + Testing: %s using %s looking for any of %s\n",target, resolver, trustedns)
 	}
 	DoResolve(target,resolver,trustedns)
 }
