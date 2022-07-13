@@ -23,8 +23,8 @@ var version = "0.1"
 
 func parseOptions() *Options {
 	options := &Options{}
-	flag.StringVar(&options.TargetFile, 		"l", "", "List of domains we should test")
-	flag.StringVar(&options.ResolverFile, 		"r", "", "List of dns servers we should test")
+	flag.StringVar(&options.TargetFile, 		"l", "", "Target file (domains)")
+	flag.StringVar(&options.ResolverFile, 		"r", "", "Resolvers file")
 	flag.StringVar(&options.TrustedFile, 		"t", "", "List of ns hosts we should look for")
 	flag.BoolVar(&options.Version, 				"i", false, "Version info")
 	flag.BoolVar(&options.Verbose, 				"v", false, "Verbose mode")
