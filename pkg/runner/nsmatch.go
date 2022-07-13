@@ -21,23 +21,6 @@ func DoResolve(hostname string, resolver string) []string{
 }
 
 
-// This is a nice comment to make lint happy. hello lint, i'm here!
-/*
-func CheckResolverOld(resolver string, trusted_rdata string, wg * sync.WaitGroup, verbose bool) {
-	defer wg.Done()
-
-	test := DoResolve("nscheck.pingback.me",resolver)[0] 
-	if strings.Contains("8.8.8.8",test) {
-		if verbose {
-			fmt.Printf("%s:INCORRECT\n",resolver)
-		}
-	} else {
-		fmt.Printf("%s:CORRECT\n",resolver)
-	}
-
-}
-*/
-
 // resolver, targets, trustedns, options.Verbose
 func Start(resolver string, target string, trustedns []string, verbose bool) {
 

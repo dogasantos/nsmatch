@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
+
+	nsmatch "github.com/dogasantos/nsmatch/pkg/runner"
 )
 
 // This is a nice comment to make lint happy. hello lint, i'm here!
