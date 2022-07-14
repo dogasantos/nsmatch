@@ -64,6 +64,7 @@ func main() {
 		wg := new(sync.WaitGroup)
 		
 		for _, target := range targets {
+			
 			target = strings.ReplaceAll(target, " ", "")
 			if len(target) > 1 {
 				wg.Add(1)
