@@ -24,7 +24,7 @@ func DoResolve(target string, resolver string, trustedns []string) {
 			for _, trusted := range trustedns {
 				trusted = strings.ReplaceAll(trusted, " ", "")
 				nsfound = strings.ReplaceAll(nsfound, " ", "")
-				if len(trusted) > 2 {\
+				if len(trusted) > 2 {
 					if strings.Contains(nsfound,trusted) {
 					//if nsfound == trusted {
 						fmt.Printf("%s:%s,%s\n",target,nsfound,trusted)
