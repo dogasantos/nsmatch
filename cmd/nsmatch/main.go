@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"strings"
 	"sync"
+	"time"
 
 	nsmatch "github.com/dogasantos/nsmatch/pkg/runner"
 )
@@ -62,13 +63,21 @@ func main() {
 			fmt.Printf("  + Starting routines\n")
 		}
 		wg := new(sync.WaitGroup)
-		
+		routinescounter := 0
 		for _, target := range targets {
 			
 			target = strings.ReplaceAll(target, " ", "")
 			if len(target) > 1 {
 				wg.Add(1)
 				go nsmatch.Start(resolvers, target, trustedns, options.Verbose, wg)
+				if routinescounter == 10 {
+					time.Sleep(2 * time.Second)
+					routinescounter = 0
+				} else {
+					routinescounter = routinescounter+1
+				}
+
+
 			}
 		}
 		wg.Wait()
