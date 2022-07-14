@@ -71,7 +71,7 @@ func main() {
 				wg.Add(1)
 				go nsmatch.Start(resolvers, target, trustedns, options.Verbose, wg)
 				if routinescounter == 10 {
-					time.Sleep(2 * time.Second)
+					time.Sleep(10 * time.Second)
 					routinescounter = 0
 				} else {
 					routinescounter = routinescounter+1
