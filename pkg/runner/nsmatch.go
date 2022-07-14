@@ -28,6 +28,9 @@ func DoResolve(target string, resolver string, trustedns []string) {
 					if strings.Contains(nsfound,trusted) {
 					//if nsfound == trusted {
 						fmt.Printf("%s:%s,%s\n",target,nsfound,trusted)
+					} 
+					else if nsfound == trusted {
+						fmt.Printf("%s:%s,%s\n",target,nsfound,trusted)
 					}
 				}
 			}
