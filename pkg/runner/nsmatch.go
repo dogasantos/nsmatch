@@ -18,20 +18,21 @@ func DoResolve(target string, resolver string, trustedns []string) {
 
 	dnsClient := retryabledns.New(resolvers, 2)
 	dnsResponses, _ := dnsClient.Query(target, dns.TypeNS)
+
 	if len(trustedns) > 0 {
 		for _, nsfound := range dnsResponses.NS {
-
 			for _, trusted := range trustedns {
 				trusted = strings.ReplaceAll(trusted, " ", "")
 				nsfound = strings.ReplaceAll(nsfound, " ", "")
 				if len(trusted) > 2 {
 					if strings.Contains(nsfound,trusted) {
-					//if nsfound == trusted {
+					
 						fmt.Printf("%s:%s,%s\n",target,nsfound,trusted)
 					} 
 					else if nsfound == trusted {
 						fmt.Printf("%s:%s,%s\n",target,nsfound,trusted)
 					}
+
 				}
 			}
 		}
